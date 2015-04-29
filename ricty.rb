@@ -1,6 +1,16 @@
 require 'formula'
+require 'yaml'
+
+module YAMLDiff
+  def diff_txt
+    data_to_patch = DATAPatch.new :p1
+    data_to_patch.path = Pathname __FILE__
+    YAML.load data_to_patch.contents
+  end
+end
 
 class Powerline < Formula
+  extend YAMLDiff
   homepage 'https://github.com/powerline/fontpatcher'
   url 'https://github.com/powerline/fontpatcher/archive/18a788b8ec1822095813b73b0582a096320ff714.zip'
   sha1 'eacbca3a3e3b7acd03743e80a51de97c9c0bbc80'
@@ -8,7 +18,19 @@ class Powerline < Formula
   def initialize(name = 'powerline', path = Pathname(__FILE__), spec = 'stable')
     super
   end
-  patch :DATA
+  patch diff_txt[:powerline]
+end
+
+class Webdevicons < Formula
+  extend YAMLDiff
+  homepage 'https://github.com/ryanoasis/nerd-filetype-glyphs-fonts-patcher'
+  url 'https://github.com/ryanoasis/nerd-filetype-glyphs-fonts-patcher/archive/v0.2.0.zip'
+  sha1 'e17a7eba8a8da14ad51217efb8e7782d17b625ab'
+  version '0.2.0'
+  def initialize(name = 'nerd-tiletype-glyphs', path = Pathname(__FILE__), spec = 'stable')
+    super
+  end
+  patch diff_txt[:webdevicons]
 end
 
 class Ricty < Formula
@@ -43,6 +65,7 @@ class Ricty < Formula
 
   option 'powerline', 'Patch for Powerline'
   option 'vim-powerline', 'Patch for Powerline from vim-powerline'
+  option 'webdevicons', 'Patch for vim-webdevicons'
   option 'dz', 'Use Inconsolata-dz instead of Inconsolata'
   option 'disable-fullwidth', 'Disable fullwidth ambiguous characters'
   option 'disable-visible-space', 'Disable visible zenkaku space'
@@ -68,6 +91,12 @@ class Ricty < Formula
       powerline_script << buildpath + 'fontpatcher/fontpatcher'
       rename_from = "\.ttf"
       rename_to = '-Powerline.ttf'
+    end
+    if build.include?('webdevicons')
+      webdevicons = Webdevicons.new
+      webdevicons.brew { buildpath.install Dir['*'] }
+      webdevicons.patch
+      webdevicons_script = buildpath + 'font-patcher'
     end
     if build.include? 'dz'
       resource('inconsolatadzfonts').stage { share_fonts.install Dir['*'] }
@@ -98,6 +127,11 @@ class Ricty < Formula
         end
       end
     end
+    if build.include?('webdevicons')
+      ttf_files.each do |ttf|
+        system "fontforge -lang=py -script #{webdevicons_script} #{ttf}"
+      end
+    end
     share_fonts.install Dir['Ricty*.ttf']
   end
 
@@ -119,15 +153,46 @@ class Ricty < Formula
 end
 
 __END__
-diff --git a/scripts/powerline-fontpatcher b/scripts/powerline-fontpatcher
-index ed2bc65..094c974
---- a/scripts/powerline-fontpatcher
-+++ b/scripts/powerline-fontpatcher
-@@ -73,0 +74,7 @@ class FontPatcher(object):
-+				# Ignore the above calculation and
-+				# manually set the best values for Ricty
-+				target_bb[0]=0
-+				target_bb[1]=-525
-+				target_bb[2]=1025
-+				target_bb[3]=1650
-+
+:powerline: |
+  diff --git a/scripts/powerline-fontpatcher b/scripts/powerline-fontpatcher
+  index ed2bc65..094c974
+  --- a/scripts/powerline-fontpatcher
+  +++ b/scripts/powerline-fontpatcher
+  @@ -73,0 +74,7 @@ class FontPatcher(object):
+  +				# Ignore the above calculation and
+  +				# manually set the best values for Ricty
+  +				target_bb[0]=0
+  +				target_bb[1]=-525
+  +				target_bb[2]=1025
+  +				target_bb[3]=1650
+  +
+
+:webdevicons: |
+  diff --git a/font-patcher b/font-patcher
+  index bab316b..c0e173c 100755
+  --- a/font-patcher
+  +++ b/font-patcher
+  @@ -43,14 +43,6 @@ if args.single:
+
+   sourceFont = fontforge.open(args.font)
+
+  -# rename font
+  -fontname, style = re.match("^([^-]*)(?:(-.*))?$", sourceFont.fontname).groups()
+  -sourceFont.familyname = sourceFont.familyname + additionalFontNameSuffix
+  -sourceFont.fullname = sourceFont.fullname + additionalFontNameSuffix
+  -sourceFont.fontname = fontname + additionalFontNameSuffix.replace(" ", "")
+  -sourceFont.appendSFNTName('English (US)', 'Preferred Family', sourceFont.familyname)
+  -sourceFont.appendSFNTName('English (US)', 'Compatible Full', sourceFont.fullname)
+  -
+   # glyph font
+
+   sourceFont_em_original = sourceFont.em
+  @@ -250,7 +242,7 @@ extension = os.path.splitext(sourceFont.path)[1]
+   # @todo later add option to generate the sfd?
+   #sourceFont.save(sourceFont.fullname + ".sfd")
+
+  -sourceFont.generate(sourceFont.fullname + extension)
+  +sourceFont.generate(sourceFont.path)
+
+   print "Generated"
+   print sourceFont.fullname
