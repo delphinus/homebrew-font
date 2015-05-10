@@ -169,10 +169,10 @@ __END__
 
 :webdevicons: |
   diff --git a/font-patcher b/font-patcher
-  index bab316b..c0e173c 100755
+  index 74a2191..4e82b2a 100755
   --- a/font-patcher
   +++ b/font-patcher
-  @@ -43,14 +43,6 @@ if args.single:
+  @@ -32,14 +32,6 @@ if args.single:
 
    sourceFont = fontforge.open(args.font)
 
@@ -187,7 +187,47 @@ __END__
    # glyph font
 
    sourceFont_em_original = sourceFont.em
-  @@ -250,7 +242,7 @@ extension = os.path.splitext(sourceFont.path)[1]
+  @@ -80,34 +72,14 @@ symbols2.em = sourceFont.em
+   # Initial font dimensions
+   font_dim = {
+    'xmin'  :    0,
+  -	'ymin'  :    -sourceFont.descent,
+  -	'xmax'  :    0,
+  -	'ymax'  :    sourceFont.ascent,
+  +	'ymin'  :    -525,
+  +	'xmax'  :    1025,
+  +	'ymax'  :    1650,
+
+  -	'width' :    0,
+  -	'height':    0,
+  +	'width' :    1025,
+  +	'height':    2175,
+   }
+
+  -# Find the biggest char width and height
+  -#
+  -# 0x00-0x17f is the Latin Extended-A range
+  -# 0x2500-0x2600 is the box drawing range
+  -for glyph in range(0x00, 0x17f) + range(0x2500, 0x2600):
+  -	try:
+  -		(xmin, ymin, xmax, ymax) = sourceFont[glyph].boundingBox()
+  -	except TypeError:
+  -		continue
+  -
+  -	if font_dim['width'] == 0:
+  -		font_dim['width'] = sourceFont[glyph].width
+  -
+  -	if ymin < font_dim['ymin']: font_dim['ymin'] = ymin
+  -	if ymax > font_dim['ymax']: font_dim['ymax'] = ymax
+  -	if xmax > font_dim['xmax']: font_dim['xmax'] = xmax
+  -
+  -# Calculate font height
+  -font_dim['height'] = abs(font_dim['ymin']) + font_dim['ymax']
+  -
+   # Update the font encoding to ensure that the Unicode glyphs are available
+   sourceFont.encoding = 'ISO10646'
+
+  @@ -239,7 +211,7 @@ extension = os.path.splitext(sourceFont.path)[1]
    # @todo later add option to generate the sfd?
    #sourceFont.save(sourceFont.fullname + ".sfd")
 
