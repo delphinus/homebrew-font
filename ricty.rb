@@ -25,8 +25,8 @@ class Webdevicons < Formula
   extend YAMLDiff
   homepage 'https://github.com/ryanoasis/nerd-filetype-glyphs-fonts-patcher'
   version '0.2.0'
-  url "https://github.com/ryanoasis/nerd-filetype-glyphs-fonts-patcher/raw/v#{version}/font-patcher"
-  sha1 '43be0362199e72dcc982935a67b44ebff14ba619'
+  url "https://github.com/ryanoasis/nerd-filetype-glyphs-fonts-patcher/archive/v#{version}.zip"
+  sha1 'e17a7eba8a8da14ad51217efb8e7782d17b625ab'
   def initialize(name = 'nerd-tiletype-glyphs', path = Pathname(__FILE__), spec = 'stable')
     super
   end
