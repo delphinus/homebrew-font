@@ -190,7 +190,7 @@ __END__
   @@ -80,34 +72,14 @@ symbols2.em = sourceFont.em
    # Initial font dimensions
    font_dim = {
-    'xmin'  :    0,
+   	'xmin'  :    0,
   -	'ymin'  :    -sourceFont.descent,
   -	'xmax'  :    0,
   -	'ymax'  :    sourceFont.ascent,
