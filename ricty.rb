@@ -13,7 +13,7 @@ class Powerline < Formula
   extend YAMLDiff
   homepage 'https://github.com/powerline/fontpatcher'
   url 'https://github.com/powerline/fontpatcher/archive/18a788b8ec1822095813b73b0582a096320ff714.zip'
-  sha1 'eacbca3a3e3b7acd03743e80a51de97c9c0bbc80'
+  sha256 'c50a9c9a94e7b5a3f0cd0c149c5c394684c8b9b63e049a9277500286921c29ce'
   version '20150113'
   def initialize(name = 'powerline', path = Pathname(__FILE__), spec = 'stable')
     super
@@ -21,16 +21,46 @@ class Powerline < Formula
   patch diff_txt[:powerline]
 end
 
-class Webdevicons < Formula
+class FontnerdiconsFontpatcher < Formula
   extend YAMLDiff
-  homepage 'https://github.com/ryanoasis/nerd-filetype-glyphs-fonts-patcher'
-  version '0.2.0'
-  url "https://github.com/ryanoasis/nerd-filetype-glyphs-fonts-patcher/archive/v#{version}.zip"
-  sha1 'e17a7eba8a8da14ad51217efb8e7782d17b625ab'
-  def initialize(name = 'nerd-tiletype-glyphs', path = Pathname(__FILE__), spec = 'stable')
+  homepage 'https://github.com/ryanoasis/font-nerd-icons'
+  version '0.3.1'
+  url "https://raw.githubusercontent.com/ryanoasis/font-nerd-icons/v#{version}/font-patcher"
+  sha256 '4eb44f809ced10cd441963878f868db1b8f2153e4d419ef488b1874d9b69d453'
+  def initialize(name = 'fontnerdicons_fontpatcher', path = Pathname(__FILE__), spec = 'stable')
     super
   end
   patch diff_txt[:webdevicons]
+end
+
+class FontnerdiconsDevicons < Formula
+  homepage 'https://github.com/ryanoasis/font-nerd-icons'
+  version '0.3.1'
+  url "https://github.com/ryanoasis/font-nerd-icons/raw/v#{version}/glyph-source-fonts/devicons.ttf"
+  sha256 'cbb926337e9b6c88b615a2a91e83f304c72e2f7d66835484ab21341f70ee489c'
+  def initialize(name = 'fontnerdicons_devicons', path = Pathname(__FILE__), spec = 'stable')
+    super
+  end
+end
+
+class FontnerdiconsOriginalsource < Formula
+  homepage 'https://github.com/ryanoasis/font-nerd-icons'
+  version '0.3.1'
+  url "https://github.com/ryanoasis/font-nerd-icons/raw/v#{version}/glyph-source-fonts/original-source.otf"
+  sha256 '916057692a3a6902fa538faffb7db6292b96cdbb32b55f478d6bca52ede80213'
+  def initialize(name = 'fontnerdicons_originalsource', path = Pathname(__FILE__), spec = 'stable')
+    super
+  end
+end
+
+class Pomicons < Formula
+  homepage 'https://github.com/gabrielelana/pomicons'
+  version 'master'
+  url "https://github.com/gabrielelana/pomicons/raw/#{version}/fonts/Pomicons.otf"
+  sha256 'b215bcfb88927419b81c8e86ae8948ad83a9ca34870d71566962032e5afd75a9'
+  def initialize(name = 'pomicons', path = Pathname(__FILE__), spec = 'stable')
+    super
+  end
 end
 
 class Ricty < Formula
@@ -93,10 +123,16 @@ class Ricty < Formula
       rename_to = '-Powerline.ttf'
     end
     if build.include?('webdevicons')
-      webdevicons = Webdevicons.new
-      webdevicons.brew { buildpath.install Dir['*'] }
-      webdevicons.patch
+      fontpatcher = FontnerdiconsFontpatcher.new
+      fontpatcher.brew { buildpath.install Dir['*'] }
+      fontpatcher.patch
+      [FontnerdiconsDevicons, FontnerdiconsOriginalsource, Pomicons].each do |klass|
+        instance = klass.new
+        instance.brew { (buildpath + 'glyph-source-fonts').install Dir['*'] }
+      end
       webdevicons_script = buildpath + 'font-patcher'
+      rename_from = '(Ricty|Discord)-?'
+      rename_to = "\\1 "
     end
     if build.include? 'dz'
       resource('inconsolatadzfonts').stage { share_fonts.install Dir['*'] }
@@ -129,7 +165,8 @@ class Ricty < Formula
     end
     if build.include?('webdevicons')
       ttf_files.each do |ttf|
-        system "fontforge -lang=py -script #{webdevicons_script} #{ttf}"
+        system "fontforge -lang=py -script #{webdevicons_script} --pomicons #{ttf}"
+        mv ttf.gsub(/#{rename_from}/, rename_to), ttf
       end
     end
     share_fonts.install Dir['Ricty*.ttf']
@@ -169,70 +206,41 @@ __END__
 
 :webdevicons: |
   diff --git a/font-patcher b/font-patcher
-  index 74a2191..4e82b2a 100755
+  index 26b6bf8..3150ead 100755
   --- a/font-patcher
   +++ b/font-patcher
-  @@ -32,14 +32,6 @@ if args.single:
+  @@ -39,31 +39,12 @@ if actualVersion < minimumVersion:
+       print "Please use at least version: " + str(minimumVersion)
+       sys.exit(1)
 
+  -
+  -verboseAdditionalFontNameSuffix = " Plus Nerd File Types"
+  -
+  -if args.windows:
+  -    # attempt to shorten here on the additional name BEFORE trimming later
+  -    additionalFontNameSuffix = " PNFT"
+  -else:
+  -    additionalFontNameSuffix = verboseAdditionalFontNameSuffix
+  -
+  -if args.single:
+  -    additionalFontNameSuffix += " Mono"
+  -    verboseAdditionalFontNameSuffix += " Mono"
+  -
+  -if args.pomicons:
+  -    additionalFontNameSuffix += " Plus Pomicons"
+  -    verboseAdditionalFontNameSuffix += " Plus Pomicons"
+  -
+  -
    sourceFont = fontforge.open(args.font)
 
-  -# rename font
   -fontname, style = re.match("^([^-]*)(?:(-.*))?$", sourceFont.fontname).groups()
-  -sourceFont.familyname = sourceFont.familyname + additionalFontNameSuffix
-  -sourceFont.fullname = sourceFont.fullname + additionalFontNameSuffix
-  -sourceFont.fontname = fontname + additionalFontNameSuffix.replace(" ", "")
-  -sourceFont.appendSFNTName('English (US)', 'Preferred Family', sourceFont.familyname)
-  -sourceFont.appendSFNTName('English (US)', 'Compatible Full', sourceFont.fullname)
-  -
-   # glyph font
+  -familyname = sourceFont.familyname + additionalFontNameSuffix
+  +fontname = sourceFont.fontname
+  +familyname = sourceFont.familyname
+   # fullname (filename) can always use long/verbose font name, even in windows
+  -fullname = sourceFont.fullname + verboseAdditionalFontNameSuffix
+  -fontname = fontname + additionalFontNameSuffix.replace(" ", "")
+  +fullname = sourceFont.fullname
 
-   sourceFont_em_original = sourceFont.em
-  @@ -80,34 +72,14 @@ symbols2.em = sourceFont.em
-   # Initial font dimensions
-   font_dim = {
-   	'xmin'  :    0,
-  -	'ymin'  :    -sourceFont.descent,
-  -	'xmax'  :    0,
-  -	'ymax'  :    sourceFont.ascent,
-  +	'ymin'  :    -525,
-  +	'xmax'  :    1025,
-  +	'ymax'  :    1650,
-
-  -	'width' :    0,
-  -	'height':    0,
-  +	'width' :    1025,
-  +	'height':    2175,
-   }
-
-  -# Find the biggest char width and height
-  -#
-  -# 0x00-0x17f is the Latin Extended-A range
-  -# 0x2500-0x2600 is the box drawing range
-  -for glyph in range(0x00, 0x17f) + range(0x2500, 0x2600):
-  -	try:
-  -		(xmin, ymin, xmax, ymax) = sourceFont[glyph].boundingBox()
-  -	except TypeError:
-  -		continue
-  -
-  -	if font_dim['width'] == 0:
-  -		font_dim['width'] = sourceFont[glyph].width
-  -
-  -	if ymin < font_dim['ymin']: font_dim['ymin'] = ymin
-  -	if ymax > font_dim['ymax']: font_dim['ymax'] = ymax
-  -	if xmax > font_dim['xmax']: font_dim['xmax'] = xmax
-  -
-  -# Calculate font height
-  -font_dim['height'] = abs(font_dim['ymin']) + font_dim['ymax']
-  -
-   # Update the font encoding to ensure that the Unicode glyphs are available
-   sourceFont.encoding = 'ISO10646'
-
-  @@ -239,7 +211,7 @@ extension = os.path.splitext(sourceFont.path)[1]
-   # @todo later add option to generate the sfd?
-   #sourceFont.save(sourceFont.fullname + ".sfd")
-
-  -sourceFont.generate(sourceFont.fullname + extension)
-  +sourceFont.generate(sourceFont.path)
-
-   print "Generated"
-   print sourceFont.fullname
+   if args.windows:
+       maxLength = 31
