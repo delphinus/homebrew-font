@@ -206,7 +206,7 @@ __END__
 
 :webdevicons: |
   diff --git a/font-patcher b/font-patcher
-  index 26b6bf8..3150ead 100755
+  index 26b6bf8..eac1cc7 100755
   --- a/font-patcher
   +++ b/font-patcher
   @@ -39,31 +39,12 @@ if actualVersion < minimumVersion:
@@ -244,3 +244,39 @@ __END__
 
    if args.windows:
        maxLength = 31
+  @@ -199,6 +180,26 @@ def copy_glyphs(sourceFont, sourceFontStart, sourceFontEnd, symbolFont, symbolFo
+               # Prepare symbol glyph dimensions
+               sym_dim = get_dim(sym_glyph)
+
+  +            if sourceFontStart == sourceFontRange1Start:
+  +                x_ratio = 0.8
+  +                y_ratio = 0.8
+  +                x_diff = 80
+  +                y_diff = -50
+  +            elif sourceFontStart == sourceFontRange3Start:
+  +                x_ratio = 1.1
+  +                y_ratio = 1.1
+  +                x_diff = 0
+  +                y_diff = -100
+  +            else:
+  +                x_ratio = 1.05
+  +                y_ratio = 1.05
+  +                x_diff = 0
+  +                y_diff = -200
+  +
+  +            scale = psMat.scale(x_ratio, y_ratio)
+  +            translate = psMat.translate(x_diff, y_diff)
+  +            transform = psMat.compose(scale, translate)
+  +
+               # Select and copy symbol from its encoding point
+               symbolFont.selection.select(sym_glyph.encoding)
+               symbolFont.copy()
+  @@ -207,6 +208,8 @@ def copy_glyphs(sourceFont, sourceFontStart, sourceFontEnd, symbolFont, symbolFo
+               sourceFont.selection.select(currentSourceFontGlyph)
+               sourceFont.paste()
+
+  +            sourceFont.transform(transform)
+  +
+               if args.single:
+                   # Now that we have copy/pasted the glyph, it's time to scale and move it
+
