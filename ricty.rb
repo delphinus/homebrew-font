@@ -23,9 +23,9 @@ end
 
 class FontnerdiconsFontpatcher < Formula
   extend YAMLDiff
-  homepage 'https://github.com/ryanoasis/font-nerd-icons'
+  homepage 'https://github.com/ryanoasis/nerd-fonts'
   version '0.3.1'
-  url "https://raw.githubusercontent.com/ryanoasis/font-nerd-icons/v#{version}/font-patcher"
+  url "https://raw.githubusercontent.com/ryanoasis/nerd-fonts/v#{version}/font-patcher"
   sha256 '4eb44f809ced10cd441963878f868db1b8f2153e4d419ef488b1874d9b69d453'
   def initialize(name = 'fontnerdicons_fontpatcher', path = Pathname(__FILE__), spec = 'stable')
     super
@@ -34,9 +34,9 @@ class FontnerdiconsFontpatcher < Formula
 end
 
 class FontnerdiconsDevicons < Formula
-  homepage 'https://github.com/ryanoasis/font-nerd-icons'
+  homepage 'https://github.com/ryanoasis/nerd-fonts'
   version '0.3.1'
-  url "https://github.com/ryanoasis/font-nerd-icons/raw/v#{version}/glyph-source-fonts/devicons.ttf"
+  url "https://github.com/ryanoasis/nerd-fonts/raw/v#{version}/glyph-source-fonts/devicons.ttf"
   sha256 'cbb926337e9b6c88b615a2a91e83f304c72e2f7d66835484ab21341f70ee489c'
   def initialize(name = 'fontnerdicons_devicons', path = Pathname(__FILE__), spec = 'stable')
     super
@@ -44,9 +44,9 @@ class FontnerdiconsDevicons < Formula
 end
 
 class FontnerdiconsOriginalsource < Formula
-  homepage 'https://github.com/ryanoasis/font-nerd-icons'
+  homepage 'https://github.com/ryanoasis/nerd-fonts'
   version '0.3.1'
-  url "https://github.com/ryanoasis/font-nerd-icons/raw/v#{version}/glyph-source-fonts/original-source.otf"
+  url "https://github.com/ryanoasis/nerd-fonts/raw/v#{version}/glyph-source-fonts/original-source.otf"
   sha256 '916057692a3a6902fa538faffb7db6292b96cdbb32b55f478d6bca52ede80213'
   def initialize(name = 'fontnerdicons_originalsource', path = Pathname(__FILE__), spec = 'stable')
     super
