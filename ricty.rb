@@ -131,7 +131,7 @@ class Ricty < Formula
         instance.brew { (buildpath + 'glyph-source-fonts').install Dir['*'] }
       end
       webdevicons_script = buildpath + 'font-patcher'
-      rename_from = '(Ricty|Discord)-?'
+      rename_from = '(Ricty|Discord|Bold(?=Oblique))-?'
       rename_to = "\\1 "
     end
     if build.include? 'dz'
@@ -153,6 +153,9 @@ class Ricty < Formula
     powerline_args.unshift('--no-rename') if build.include? 'patch-in-place'
 
     system 'sh', './ricty_generator.sh', *ricty_args
+    Dir['Ricty*.ttf'].each do |file|
+      system "fontforge -script misc/regular2oblique_converter.pe #{file}"
+    end
 
     ttf_files = Dir['Ricty*.ttf']
     if build.include?('powerline') || build.include?('vim-powerline')
