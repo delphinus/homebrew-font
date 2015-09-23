@@ -9,56 +9,84 @@ module YAMLDiff
   end
 end
 
-class Powerline < Formula
-  extend YAMLDiff
-  homepage 'https://github.com/powerline/fontpatcher'
-  url 'https://github.com/powerline/fontpatcher/archive/18a788b8ec1822095813b73b0582a096320ff714.zip'
-  sha256 'c50a9c9a94e7b5a3f0cd0c149c5c394684c8b9b63e049a9277500286921c29ce'
-  version '20150113'
-  def initialize(name = 'powerline', path = Pathname(__FILE__), spec = 'stable')
-    super
-  end
-  patch diff_txt[:powerline]
-end
-
-class FontnerdiconsFontpatcher < Formula
+class NerdfontsFontpatcher < Formula
   extend YAMLDiff
   homepage 'https://github.com/ryanoasis/nerd-fonts'
-  version '0.3.1'
-  url "https://raw.githubusercontent.com/ryanoasis/nerd-fonts/v#{version}/font-patcher"
-  sha256 '4eb44f809ced10cd441963878f868db1b8f2153e4d419ef488b1874d9b69d453'
-  def initialize(name = 'fontnerdicons_fontpatcher', path = Pathname(__FILE__), spec = 'stable')
+  version '0.5.0'
+  url "https://github.com/ryanoasis/nerd-fonts/raw/#{version}/font-patcher"
+  sha256 '754cfbfa06eb419baf9f244bbe9b32367f0de38517e0d4be517844f49f7e5cfb'
+  def initialize(name = 'nerdfonts_fontpatcher', path = Pathname(__FILE__), spec = 'stable')
     super
   end
-  patch diff_txt[:webdevicons]
+  patch diff_txt[:nerdfonts]
 end
 
-class FontnerdiconsDevicons < Formula
+class NerdfontsChangelog < Formula
   homepage 'https://github.com/ryanoasis/nerd-fonts'
-  version '0.3.1'
-  url "https://github.com/ryanoasis/nerd-fonts/raw/v#{version}/glyph-source-fonts/devicons.ttf"
+  version '0.5.0'
+  url "https://github.com/ryanoasis/nerd-fonts/raw/#{version}/changelog.md"
+  sha256 '37d8824943c35f21e3f0653d9c57601372741fff3ac81cd047ab3d446c5710ac'
+  def initialize(name = 'nerdfonts_devicons', path = Pathname(__FILE__), spec = 'stable')
+    super
+  end
+end
+
+class NerdfontsDevicons < Formula
+  homepage 'https://github.com/ryanoasis/nerd-fonts'
+  version '0.5.0'
+  url "https://github.com/ryanoasis/nerd-fonts/raw/#{version}/glyph-source-fonts/devicons.ttf"
   sha256 'cbb926337e9b6c88b615a2a91e83f304c72e2f7d66835484ab21341f70ee489c'
-  def initialize(name = 'fontnerdicons_devicons', path = Pathname(__FILE__), spec = 'stable')
+  def initialize(name = 'nerdfonts_devicons', path = Pathname(__FILE__), spec = 'stable')
     super
   end
 end
 
-class FontnerdiconsOriginalsource < Formula
+class NerdfontsOriginalsource < Formula
   homepage 'https://github.com/ryanoasis/nerd-fonts'
-  version '0.3.1'
-  url "https://github.com/ryanoasis/nerd-fonts/raw/v#{version}/glyph-source-fonts/original-source.otf"
-  sha256 '916057692a3a6902fa538faffb7db6292b96cdbb32b55f478d6bca52ede80213'
-  def initialize(name = 'fontnerdicons_originalsource', path = Pathname(__FILE__), spec = 'stable')
+  version '0.5.0'
+  url "https://github.com/ryanoasis/nerd-fonts/raw/#{version}/glyph-source-fonts/original-source.otf"
+  sha256 '767a71c1ebf5129d7548b92c8ec15a4089d717a38b267ba0f09bed9d37956c7e'
+  def initialize(name = 'nerdfonts_originalsource', path = Pathname(__FILE__), spec = 'stable')
     super
   end
 end
 
-class Pomicons < Formula
-  homepage 'https://github.com/gabrielelana/pomicons'
-  version 'master'
-  url "https://github.com/gabrielelana/pomicons/raw/#{version}/fonts/Pomicons.otf"
+class NerdfontsPomicons < Formula
+  homepage 'https://github.com/ryanoasis/nerd-fonts'
+  version '0.5.0'
+  url "https://github.com/ryanoasis/nerd-fonts/raw/#{version}/glyph-source-fonts/Pomicons.otf"
   sha256 'b215bcfb88927419b81c8e86ae8948ad83a9ca34870d71566962032e5afd75a9'
-  def initialize(name = 'pomicons', path = Pathname(__FILE__), spec = 'stable')
+  def initialize(name = 'nerdfonts_pomicons', path = Pathname(__FILE__), spec = 'stable')
+    super
+  end
+end
+
+class NerdfontsPowerline < Formula
+  homepage 'https://github.com/ryanoasis/nerd-fonts'
+  version '0.5.0'
+  url "https://github.com/ryanoasis/nerd-fonts/raw/#{version}/glyph-source-fonts/PowerlineSymbols.otf"
+  sha256 '4a2496a009b1649878ce067a7ec2aed9f79656c90136971e1dba00766515f7a1'
+  def initialize(name = 'nerdfonts_powerline', path = Pathname(__FILE__), spec = 'stable')
+    super
+  end
+end
+
+class NerdfontsFontawesome < Formula
+  homepage 'https://github.com/ryanoasis/nerd-fonts'
+  version '0.5.0'
+  url "https://github.com/ryanoasis/nerd-fonts/raw/#{version}/glyph-source-fonts/FontAwesome.otf"
+  sha256 '7961070f76a33c1307de19ce2a93dc2b26d6747fa759aee5045118644c758acc'
+  def initialize(name = 'nerdfonts_fontawesome', path = Pathname(__FILE__), spec = 'stable')
+    super
+  end
+end
+
+class NerdfontsOcticons < Formula
+  homepage 'https://github.com/ryanoasis/nerd-fonts'
+  version '0.5.0'
+  url "https://github.com/ryanoasis/nerd-fonts/raw/#{version}/glyph-source-fonts/octicons.ttf"
+  sha256 'de09ac73ef5b5960535750e2151f6652e2b8efa40dbfaaeba73c55c6692c9071'
+  def initialize(name = 'nerdfonts_octicons', path = Pathname(__FILE__), spec = 'stable')
     super
   end
 end
@@ -87,50 +115,28 @@ class Ricty < Formula
     version '20130617'
   end
 
-  resource 'vimpowerline' do
-    url 'https://github.com/Lokaltog/vim-powerline/archive/09c0cea859.tar.gz'
-    sha1 'a1acef16074b6c007a57de979787a9b166f1feb1'
-    version '20120817'
-  end
-
-  option 'powerline', 'Patch for Powerline'
-  option 'vim-powerline', 'Patch for Powerline from vim-powerline'
-  option 'webdevicons', 'Patch for vim-webdevicons'
+  option 'nerdfonts', 'Patch for nerdfonts'
   option 'dz', 'Use Inconsolata-dz instead of Inconsolata'
   option 'disable-fullwidth', 'Disable fullwidth ambiguous characters'
   option 'disable-visible-space', 'Disable visible zenkaku space'
-  option 'patch-in-place', "Patch Powerline glyphs directly into Ricty fonts without creating new 'for Powerline' fonts"
 
   depends_on 'fontforge'
 
   def install
     share_fonts = share + 'fonts'
-    powerline_script = []
 
     resource('migu1mfonts').stage { share_fonts.install Dir['*'] }
-    if build.include? 'powerline'
-      powerline = Powerline.new
-      powerline.brew { buildpath.install Dir['*'] }
-      powerline.patch
-      powerline_script << buildpath + 'scripts/powerline-fontpatcher'
-      rename_from = '(Ricty|Discord)-?'
-      rename_to = "\\1 "
-    end
-    if build.include?('vim-powerline') && !(build.include?('powerline') && build.include?('patch-in-place'))
-      resource('vimpowerline').stage { buildpath.install 'fontpatcher' }
-      powerline_script << buildpath + 'fontpatcher/fontpatcher'
-      rename_from = "\.ttf"
-      rename_to = '-Powerline.ttf'
-    end
-    if build.include?('webdevicons')
-      fontpatcher = FontnerdiconsFontpatcher.new
+    if build.include?('nerdfonts')
+      fontpatcher = NerdfontsFontpatcher.new
       fontpatcher.brew { buildpath.install Dir['*'] }
       fontpatcher.patch
-      [FontnerdiconsDevicons, FontnerdiconsOriginalsource, Pomicons].each do |klass|
+      changelog = NerdfontsChangelog.new
+      changelog.brew { buildpath.install Dir['*'] }
+      [NerdfontsDevicons, NerdfontsOriginalsource, NerdfontsPomicons, NerdfontsPowerline, NerdfontsFontawesome, NerdfontsOcticons].each do |klass|
         instance = klass.new
         instance.brew { (buildpath + 'glyph-source-fonts').install Dir['*'] }
       end
-      webdevicons_script = buildpath + 'font-patcher'
+      nerdfonts_script = buildpath + 'font-patcher'
       rename_from = '(Ricty|Discord|Bold(?=Oblique))-?'
       rename_to = "\\1 "
     end
@@ -149,26 +155,15 @@ class Ricty < Formula
     ricty_args.unshift('-z') if build.include? 'disable-visible-space'
     ricty_args.unshift('-a') if build.include? 'disable-fullwidth'
 
-    powerline_args = []
-    powerline_args.unshift('--no-rename') if build.include? 'patch-in-place'
-
     system 'sh', './ricty_generator.sh', *ricty_args
     Dir['Ricty*.ttf'].each do |file|
       system "fontforge -script misc/regular2oblique_converter.pe #{file}"
     end
 
     ttf_files = Dir['Ricty*.ttf']
-    if build.include?('powerline') || build.include?('vim-powerline')
-      powerline_script.each do |script|
-        ttf_files.each do |ttf|
-          system "fontforge -lang=py -script #{script} #{powerline_args.join(' ')} #{ttf}"
-          mv ttf.gsub(/#{rename_from}/, rename_to), ttf if build.include? 'patch-in-place'
-        end
-      end
-    end
-    if build.include?('webdevicons')
+    if build.include?('nerdfonts')
       ttf_files.each do |ttf|
-        system "fontforge -lang=py -script #{webdevicons_script} --pomicons #{ttf}"
+        system "fontforge -lang=py -script #{nerdfonts_script} --fontawesome --octicons --pomicons --powerline #{ttf}"
         mv ttf.gsub(/#{rename_from}/, rename_to), ttf
       end
     end
@@ -193,79 +188,75 @@ class Ricty < Formula
 end
 
 __END__
-:powerline: |
-  diff --git a/scripts/powerline-fontpatcher b/scripts/powerline-fontpatcher
-  index ed2bc65..094c974
-  --- a/scripts/powerline-fontpatcher
-  +++ b/scripts/powerline-fontpatcher
-  @@ -73,0 +74,7 @@ class FontPatcher(object):
-  +				# Ignore the above calculation and
-  +				# manually set the best values for Ricty
-  +				target_bb[0]=0
-  +				target_bb[1]=-525
-  +				target_bb[2]=1025
-  +				target_bb[3]=1650
-  +
-
-:webdevicons: |
+:nerdfonts: |
   diff --git a/font-patcher b/font-patcher
-  index 26b6bf8..eac1cc7 100755
+  index 4dd5a54..51803d7 100755
   --- a/font-patcher
   +++ b/font-patcher
-  @@ -39,31 +39,12 @@ if actualVersion < minimumVersion:
-       print "Please use at least version: " + str(minimumVersion)
-       sys.exit(1)
-
-  -
-  -verboseAdditionalFontNameSuffix = " Plus Nerd File Types"
-  -
-  -if args.windows:
-  -    # attempt to shorten here on the additional name BEFORE trimming later
-  -    additionalFontNameSuffix = " PNFT"
-  -else:
-  -    additionalFontNameSuffix = verboseAdditionalFontNameSuffix
-  -
-  -if args.single:
-  -    additionalFontNameSuffix += " Mono"
-  -    verboseAdditionalFontNameSuffix += " Mono"
-  -
-  -if args.pomicons:
-  -    additionalFontNameSuffix += " Plus Pomicons"
-  -    verboseAdditionalFontNameSuffix += " Plus Pomicons"
-  -
-  -
+  @@ -72,10 +72,9 @@ if args.pomicons:
    sourceFont = fontforge.open(args.font)
-
-  -fontname, style = re.match("^([^-]*)(?:(-.*))?$", sourceFont.fontname).groups()
+   
+   fontname, style = re.match("^([^-]*)(?:(-.*))?$", sourceFont.fontname).groups()
   -familyname = sourceFont.familyname + additionalFontNameSuffix
-  +fontname = sourceFont.fontname
   +familyname = sourceFont.familyname
    # fullname (filename) can always use long/verbose font name, even in windows
   -fullname = sourceFont.fullname + verboseAdditionalFontNameSuffix
   -fontname = fontname + additionalFontNameSuffix.replace(" ", "")
   +fullname = sourceFont.fullname
-
+   
    if args.windows:
        maxLength = 31
-  @@ -199,6 +180,26 @@ def copy_glyphs(sourceFont, sourceFontStart, sourceFontEnd, symbolFont, symbolFo
+  @@ -95,14 +94,8 @@ def replace_all(text, dic):
+           text = text.replace(i, j)
+       return text
+   
+  -# comply with SIL Open Font License (OFL)
+  -reservedFontNameReplacements = { 'source': 'sauce', 'Source': 'Sauce', 'hermit': 'hurmit', 'Hermit': 'Hurmit', 'fira': 'fura', 'Fira': 'Fura', 'hack': 'knack', 'Hack': 'Knack' }
+  -
+   projectInfo = "Patched with 'Nerd Fonts Patcher' (https://github.com/ryanoasis/nerd-fonts)"
+   
+  -sourceFont.familyname = replace_all(familyname, reservedFontNameReplacements)
+  -sourceFont.fullname = replace_all(fullname, reservedFontNameReplacements)
+  -sourceFont.fontname = replace_all(fontname, reservedFontNameReplacements)
+   sourceFont.appendSFNTName('English (US)', 'Preferred Family', sourceFont.familyname)
+   sourceFont.appendSFNTName('English (US)', 'Compatible Full', sourceFont.fullname)
+   sourceFont.comment = projectInfo
+  @@ -285,6 +278,43 @@ def copy_glyphs(sourceFont, sourceFontStart, sourceFontEnd, symbolFont, symbolFo
                # Prepare symbol glyph dimensions
                sym_dim = get_dim(sym_glyph)
-
-  +            if sourceFontStart == sourceFontRange1Start:
-  +                x_ratio = 0.8
-  +                y_ratio = 0.8
-  +                x_diff = 80
-  +                y_diff = -50
-  +            elif sourceFontStart == sourceFontRange3Start:
-  +                x_ratio = 1.1
-  +                y_ratio = 1.1
-  +                x_diff = 0
-  +                y_diff = -100
+   
+  +            if sourceFontStart == sourceFontPomiconsStart:
+  +              x_ratio = 1.1
+  +              y_ratio = 1.1
+  +              x_diff = 0
+  +              y_diff = -100
+  +            elif sourceFontStart in [symbolsPowerlineRange1Start, symbolsPowerlineRange2Start]:
+  +              x_ratio = 0.96
+  +              y_ratio = 0.92
+  +              x_diff = 0
+  +              y_diff = -80
+  +            elif sourceFontStart == sourceFontOriginalStart:
+  +              x_ratio = 1.0
+  +              y_ratio = 1.0
+  +              x_diff = 0
+  +              y_diff = -100
+  +            elif sourceFontStart == sourceFontDeviconsStart:
+  +              x_ratio = 1.3
+  +              y_ratio = 1.3
+  +              x_diff = -150
+  +              y_diff = -330
+  +            elif sourceFontStart == sourceFontFontAwesomeStart:
+  +              x_ratio = 1.0
+  +              y_ratio = 1.0
+  +              x_diff = 0
+  +              y_diff = 0
+  +            elif sourceFontStart == sourceFontOcticonsStart:
+  +              x_ratio = 1.1
+  +              y_ratio = 1.1
+  +              x_diff = 0
+  +              y_diff = -100
   +            else:
-  +                x_ratio = 1.05
-  +                y_ratio = 1.05
-  +                x_diff = 0
-  +                y_diff = -200
+  +              print '{0:X}'.format(sourceFontStart)
   +
   +            scale = psMat.scale(x_ratio, y_ratio)
   +            translate = psMat.translate(x_diff, y_diff)
@@ -274,12 +265,24 @@ __END__
                # Select and copy symbol from its encoding point
                symbolFont.selection.select(sym_glyph.encoding)
                symbolFont.copy()
-  @@ -207,6 +208,8 @@ def copy_glyphs(sourceFont, sourceFontStart, sourceFontEnd, symbolFont, symbolFo
+  @@ -293,6 +323,8 @@ def copy_glyphs(sourceFont, sourceFontStart, sourceFontEnd, symbolFont, symbolFo
                sourceFont.selection.select(currentSourceFontGlyph)
                sourceFont.paste()
-
+   
   +            sourceFont.transform(transform)
   +
                if args.single:
                    # Now that we have copy/pasted the glyph, it's time to scale and move it
+   
+  @@ -372,8 +404,8 @@ copy_glyphs(sourceFont, sourceFontOriginalStart, sourceFontOriginalEnd, symbols,
+   copy_glyphs(sourceFont, sourceFontDeviconsStart, sourceFontDeviconsEnd, symbolsDevicons, symbolsDeviconsRangeStart, symbolsDeviconsRangeEnd)
+   
+   if args.powerline:
+  -    copy_glyphs(sourceFont, symbolsPowerlineRange1Start, symbolsPowerlineRange1End, sourceFont, symbolsPowerlineRange1Start, symbolsPowerlineRange1End)
+  -    copy_glyphs(sourceFont, symbolsPowerlineRange2Start, symbolsPowerlineRange2End, sourceFont, symbolsPowerlineRange2Start, symbolsPowerlineRange2End)
+  +    copy_glyphs(sourceFont, symbolsPowerlineRange1Start, symbolsPowerlineRange1End, powerlineSymbols, symbolsPowerlineRange1Start, symbolsPowerlineRange1End)
+  +    copy_glyphs(sourceFont, symbolsPowerlineRange2Start, symbolsPowerlineRange2End, powerlineSymbols, symbolsPowerlineRange2Start, symbolsPowerlineRange2End)
+   
+   
+   if args.fontawesome:
 
