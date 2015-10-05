@@ -190,7 +190,7 @@ end
 __END__
 :nerdfonts: |
   diff --git a/font-patcher b/font-patcher
-  index 4dd5a54..14920bb 100755
+  index 4dd5a54..8a8a774 100755
   --- a/font-patcher
   +++ b/font-patcher
   @@ -72,10 +72,9 @@ if args.pomicons:
@@ -232,9 +232,9 @@ __END__
   +              y_diff = -100
   +            elif sourceFontStart in [symbolsPowerlineRange1Start, symbolsPowerlineRange2Start]:
   +              x_ratio = 0.96
-  +              y_ratio = 0.92
+  +              y_ratio = 0.88
   +              x_diff = 0
-  +              y_diff = -80
+  +              y_diff = -40
   +            elif sourceFontStart == sourceFontOriginalStart:
   +              x_ratio = 0.9
   +              y_ratio = 0.9
