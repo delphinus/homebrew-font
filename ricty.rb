@@ -190,7 +190,7 @@ end
 __END__
 :nerdfonts: |
   diff --git a/font-patcher b/font-patcher
-  index 4dd5a54..8a8a774 100755
+  index 4dd5a54..f2c2a36 100755
   --- a/font-patcher
   +++ b/font-patcher
   @@ -72,10 +72,9 @@ if args.pomicons:
@@ -241,15 +241,15 @@ __END__
   +              x_diff = 50
   +              y_diff = -50
   +            elif sourceFontStart == sourceFontDeviconsStart:
-  +              x_ratio = 1.1
-  +              y_ratio = 1.1
-  +              x_diff = -150
-  +              y_diff = -180
-  +            elif sourceFontStart == sourceFontFontAwesomeStart:
   +              x_ratio = 1.0
   +              y_ratio = 1.0
+  +              x_diff = -150
+  +              y_diff = -150
+  +            elif sourceFontStart == sourceFontFontAwesomeStart:
+  +              x_ratio = 0.95
+  +              y_ratio = 0.95
   +              x_diff = 0
-  +              y_diff = -100
+  +              y_diff = -60
   +            elif sourceFontStart == sourceFontOcticonsStart:
   +              x_ratio = 1.0
   +              y_ratio = 1.0
