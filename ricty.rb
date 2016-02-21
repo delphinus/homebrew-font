@@ -113,12 +113,6 @@ class Ricty < Formula
     version '1.0.0'
   end
 
-  resource 'inconsolatadzfonts' do
-    url 'http://media.nodnod.net/Inconsolata-dz.otf.zip'
-    sha1 'c8254dbed67fb134d4747a7f41095cedab33b879'
-    version '1.0.0'
-  end
-
   resource 'migu1mfonts' do
     url 'http://sourceforge.jp/frs/redir.php?m=iij&f=%2Fmix-mplus-ipa%2F59022%2Fmigu-1m-20130617.zip'
     sha1 'a0641894cec593f8bb1e5c2bf630f20ee9746b18'
@@ -126,7 +120,6 @@ class Ricty < Formula
   end
 
   option 'nerdfonts', 'Patch for nerdfonts'
-  option 'dz', 'Use Inconsolata-dz instead of Inconsolata'
   option 'disable-fullwidth', 'Disable fullwidth ambiguous characters'
   option 'disable-visible-space', 'Disable visible zenkaku space'
 
@@ -158,16 +151,9 @@ class Ricty < Formula
       rename_from = '(Ricty|Discord|Bold(?=Oblique))-?'
       rename_to = "\\1 "
     end
-    if build.include? 'dz'
-      resource('inconsolatadzfonts').stage { share_fonts.install Dir['*'] }
-      inconsolata = share_fonts + 'Inconsolata-dz.otf'
-      # Patch the discord script since the special characters are in different locations in Inconsolata-dz
-      inreplace 'ricty_discord_patch.pe', '65608', '65543' # Serif r
-      inreplace 'ricty_discord_patch.pe', '65610', '65545' # Un-dotted zero
-    else
-      resource('inconsolatafonts').stage { share_fonts.install Dir['*'] }
-      inconsolata = share_fonts + 'Inconsolata.otf'
-    end
+
+    resource('inconsolatafonts').stage { share_fonts.install Dir['*'] }
+    inconsolata = share_fonts + 'Inconsolata.otf'
 
     ricty_args = [inconsolata, share_fonts + 'migu-1m-regular.ttf', share_fonts + 'migu-1m-bold.ttf']
     ricty_args.unshift('-z') if build.include? 'disable-visible-space'
