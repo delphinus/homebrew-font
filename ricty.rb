@@ -103,13 +103,19 @@ end
 
 class Ricty < Formula
   homepage 'https://github.com/yascentur/Ricty'
-  url 'https://github.com/yascentur/Ricty/archive/3.2.4.tar.gz'
-  sha1 '7fc8adcc74656d9e2e1acd325de82f0f08a6d222'
-  version '3.2.4'
+  url 'https://github.com/yascentur/Ricty/archive/4.0.1.tar.gz'
+  sha1 'b851f5fea12706dc868951fe6ed32d047a9ebe85'
+  version '4.0.1'
 
-  resource 'inconsolatafonts' do
-    url 'http://levien.com/type/myfonts/Inconsolata.otf'
-    sha1 '7f0a4919d91edcef0af9dc153054ec49d1ab3072'
+  resource 'inconsolataregular' do
+    url 'https://github.com/google/fonts/raw/master/ofl/inconsolata/Inconsolata-Regular.ttf'
+    sha1 '493154cb3884f5dcdfcac5515ea0db1f7281538f'
+    version '1.0.0'
+  end
+
+  resource 'inconsolatabold' do
+    url 'https://github.com/google/fonts/raw/master/ofl/inconsolata/Inconsolata-Bold.ttf'
+    sha1 '8639e856aa9ea16e0d519206f76942ce87d23017'
     version '1.0.0'
   end
 
@@ -152,10 +158,12 @@ class Ricty < Formula
       rename_to = "\\1 "
     end
 
-    resource('inconsolatafonts').stage { share_fonts.install Dir['*'] }
-    inconsolata = share_fonts + 'Inconsolata.otf'
+    resource('inconsolataregular').stage { share_fonts.install Dir['*'] }
+    inconsolataregular = share_fonts + 'Inconsolata-Regular.ttf'
+    resource('inconsolatabold').stage { share_fonts.install Dir['*'] }
+    inconsolatabold = share_fonts + 'Inconsolata-Bold.ttf'
 
-    ricty_args = [inconsolata, share_fonts + 'migu-1m-regular.ttf', share_fonts + 'migu-1m-bold.ttf']
+    ricty_args = [inconsolataregular, inconsolatabold, share_fonts + 'migu-1m-regular.ttf', share_fonts + 'migu-1m-bold.ttf']
     ricty_args.unshift('-z') if build.include? 'disable-visible-space'
     ricty_args.unshift('-a') if build.include? 'disable-fullwidth'
 
